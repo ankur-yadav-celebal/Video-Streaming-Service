@@ -1,10 +1,14 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+li
+{
+  font-size: 12px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -35,4 +39,126 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 88vh;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #f4f4f8;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.chat-window {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.messages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.message {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.self {
+  align-items: flex-end;
+}
+
+.message-user {
+  color: #bfc3bc;
+  /* font-weight: bold; */
+  margin-bottom: 5px;
+}
+
+.message-user span
+{
+  color: #bfc3bc;
+  font-weight: normal;
+  font-size: smaller;
+}
+
+.message-text {
+  background-color: #f0f0f3;
+  padding: 5px;
+  border-radius: 5px;
+  max-width: 70%;
+  word-wrap: break-word;
+  color: #000000;
+}
+
+.message.self .message-text {
+  background-color: #d9dcf7;
+  color: #000000;
+}
+
+.input-section {
+  display: flex;
+  padding: 15px;
+  background-color: #f4f4f8;
+  border-top: 1px solid #ddd;
+}
+
+.input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-right: 10px;
+  outline: none;
+}
+
+.user-input {
+  max-width: 80px;
+}
+
+.message-input {
+  flex-grow: 2;
+}
+
+
+.send-button {
+  padding: 10px 15px;
+  background-color: #0084ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+.send-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.typing-notification {
+  font-style: italic;
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  padding-left: 10px;
+}
+
+.message-status {
+  font-size: 10px;
+  color: grey;
+  margin-left: 5px;
+}
+
+.message-status span {
+  margin-left: 5px;
 }

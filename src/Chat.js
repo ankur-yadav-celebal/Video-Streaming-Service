@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef  } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as signalR from '@microsoft/signalr';
 
 const Chat = () => {
@@ -15,7 +15,7 @@ const Chat = () => {
 
   useEffect(() => {
     const connect = new signalR.HubConnectionBuilder()
-    .withUrl("https://localhost:7064/chathub", {
+      .withUrl("https://localhost:7064/chathub", {
         transport: signalR.HttpTransportType.WebSockets  // Explicitly specify WebSockets
       })
       .withAutomaticReconnect()
@@ -27,44 +27,47 @@ const Chat = () => {
     setConnection(connect);
 
     connect.start()
-      .then(async() => {
+      .then(async () => {
         console.log("Connected to SignalR");
-        setIsConnected(true); 
-        
-        
-      // Retrieve chat history on connection
-      try {
-        const history = await connect.invoke("GetChatHistory");
-        setMessages(history.map(entry => {
-          const [user, message, timestamp] = entry.split("~");
-          return { user, message, timestamp };
-        }));
-      } catch (error) {
-        console.error("Error retrieving chat history: ", error);
-      }
+        setIsConnected(true);
 
-        // Update connection status to true
-        connect.on("ReceiveMessage", (user, message, timestamp, status ) => {
-          setMessages(prevMessages => [...prevMessages, { user, message, timestamp, status}]);
+        // Retrieve chat history on connection
+        try {
+          const history = await connect.invoke("GetChatHistory");
+          setMessages(history.map(entry => {
+            const [user, message, timestamp] = entry.split("~");
+            return { user, message, timestamp, status: 'sent' };
+          }));
+        } catch (error) {
+          console.error("Error retrieving chat history: ", error);
+        }
+
+        connect.on("ReceiveMessage", (user, message, timestamp, messageId, status) => {
+          setMessages(prevMessages => 
+            [...prevMessages,  { user, message, timestamp, messageId, status }]);
         });
+
+        connect.on("MessageRead", (messageId) => {
+          updateMessageStatus(messageId, 'read');
+        });
+
       })
       .catch(error => console.error("Connection failed: ", error));
 
-      connect.onreconnected(() => {
-        console.log("Reconnected");
-        setIsConnected(true);
-      });
-    
-      connect.onclose(() => {
-        console.log("Connection closed");
-        setIsConnected(false);
-      });
+    connect.onreconnected(() => {
+      console.log("Reconnected");
+      setIsConnected(true);
+    });
+
+    connect.onclose(() => {
+      console.log("Connection closed");
+      setIsConnected(false);
+    });
 
     return () => {
       connect.stop();
     };
   }, []);
-
 
   useEffect(() => {
     // Scroll to the last message whenever the messages array changes
@@ -79,7 +82,7 @@ const Chat = () => {
         setIsTyping(true);
         setTypingUser(user);
       });
-  
+
       connection.on("UserStoppedTyping", () => {
         setIsTyping(false);
         setTypingUser('');
@@ -87,30 +90,34 @@ const Chat = () => {
     }
   }, [connection]);
 
-
   useEffect(() => {
-    if (isConnected && connection) {
-      // Mark the last message as read when it is viewed
-      if (messages.length > 0 && user !== messages[messages.length - 1].user) {
-        const lastMessage = messages[messages.length - 1];
-        console.log("lastMessage", lastMessage);
-        console.log("messages[messages.length - 1].user", messages[messages.length - 1].user)
+    if (isConnected && connection && messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      console.log("lastMessage", lastMessage);
+      if (user !== lastMessage.user && lastMessage.status !== 'read') {
         connection.invoke("UserReadMessage", lastMessage.user, lastMessage.messageId);
         updateMessageStatus(lastMessage.messageId, 'read');
       }
     }
-  }, [messages]);
+  }, [messages, connection, isConnected, user]);
 
-  useEffect(() => {
-    if (connection) {
-      connection.on("MessageRead", (messageId) => {
-        updateMessageStatus(messageId, 'read');
-      });
-    }
-  }, [connection]);
+  // useEffect(() => {
+  //   if (connection) {
+  //     connection.on("MessageRead", (messageId) => {
+  //       console.log("MessageRead event received with messageId: ", messageId);
+  //       if (messageId) {
+  //         updateMessageStatus(messageId, 'read');
+  //       } else {
+  //         console.error("MessageId is null or undefined");
+  //       }
+  //     });
+  //   }
+  // }, [connection]);
 
   const updateMessageStatus = (messageId, status) => {
-    setMessages(prevMessages => prevMessages.map(msg => 
+    console.log("updateMessageStatus: messageId", messageId);
+    console.log("updateMessageStatus: status", status);
+    setMessages(prevMessages => prevMessages.map(msg =>
       msg.messageId === messageId ? { ...msg, status } : msg
     ));
   };
@@ -134,7 +141,7 @@ const Chat = () => {
     if (isConnected && connection) {
       connection.invoke("UserTyping", user);
       clearTimeout(typingTimeout);
-  
+
       typingTimeout = setTimeout(() => {
         connection.invoke("UserStoppedTyping", user);
       }, 3000);  // Stop typing after 3 seconds of inactivity
@@ -155,58 +162,57 @@ const Chat = () => {
     }
   };
 
-    return (
-        <div className="chat-container">
-        <div className="chat-window">
-          <ul className="messages">
-            {messages.map((msg, index) => (
-               <li 
-              key={index} 
+  return (
+    <div className="chat-container">
+      <div className="chat-window">
+        <ul className="messages">
+          {messages.map((msg, index) => (
+            <li
+              key={index}
               className={msg.user === user ? "message self" : "message"}
               ref={index === messages.length - 1 ? lastMessageRef : null} // Set ref on the last message
             >
-              
-                <div className="message-user">{msg.user != user ? msg.user :null} <span>{msg.timestamp}</span></div>
-                <div className="message-text">{msg.message}</div>
-                <div className="message-status">
-              {msg.status === 'sent' && <span>✓</span>}
-              {msg.status === 'read' && <span style={{ color: 'blue' }}>✓✓</span>}
-            </div>
-              </li>
-            ))}
-          </ul>
-          
-        </div>
-        {isTyping && <div className="typing-notification">{typingUser} is typing...</div>}
-        <div className="input-section">
-          <input 
-            type="text" 
-            className="input user-input"
-            value={user} 
-            onChange={handleSetUser} 
-            placeholder="Your name" 
-            disabled={isConnected && (user !== '' && firstMessageSent)} // Disable once username is set
-          />
-          <input 
-            type="text" 
-            className="input message-input"
-            value={message} 
-            onChange={e => setMessage(e.target.value)} 
-            placeholder="Type a message..." 
-            onKeyDown={handleKeyPress} // Add keypress event to trigger sending message on Enter
-            disabled={!isConnected || user === ''}  // Disable if not connected or no username
-          />
-          
-          <button 
-            className="send-button"
-            onClick={sendMessage} 
-            disabled={!isConnected || user === '' || message === ''}
-          >
-            Send
-          </button>
-        </div>
+              <div className="message-user">{msg.user !== user ? msg.user : null} <span>{msg.timestamp}</span></div>
+              <div className="message-text">{msg.message}</div>
+              <div className="message-status">
+                {/* Display the blue ticks only for the current user's sent messages that are read */}
+                {msg.user === user && msg.status === 'sent' && <span>✓</span>}
+                {msg.user === user && msg.status === 'read' && <span style={{ color: 'blue' }}>✓✓</span>}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
-    );
-  };
+      {isTyping && <div className="typing-notification">{typingUser} is typing...</div>}
+      <div className="input-section">
+        <input
+          type="text"
+          className="input user-input"
+          value={user}
+          onChange={handleSetUser}
+          placeholder="Your name"
+          disabled={isConnected && (user !== '' && firstMessageSent)} // Disable once username is set
+        />
+        <input
+          type="text"
+          className="input message-input"
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+          placeholder="Type a message..."
+          onKeyDown={handleKeyPress} // Add keypress event to trigger sending message on Enter
+          disabled={!isConnected || user === ''}  // Disable if not connected or no username
+        />
+
+        <button
+          className="send-button"
+          onClick={sendMessage}
+          disabled={!isConnected || user === '' || message === ''}
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default Chat;

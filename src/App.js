@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Chat from './Chat';
+// import ChatMobX from './ChatMobX';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
           Chat application
         </p>
         <Chat></Chat>
+        {/* <ChatMobX></ChatMobX> */}
       </header>
     </div>
   );

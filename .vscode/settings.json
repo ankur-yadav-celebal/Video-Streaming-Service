@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/7d4012c9-35b1-4dfb-8a40-1afb255e010b/resourceGroups/poc-rg/providers/Microsoft.Web/sites/poc-chat-app",
+    "appService.deploySubpath": "."
+}

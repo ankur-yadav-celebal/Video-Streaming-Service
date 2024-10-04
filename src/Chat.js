@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import * as signalR from '@microsoft/signalr';
+import { Filter } from 'bad-words';
+import * as leoProfanity from 'leo-profanity';
 
 const Chat = () => {
   const [connection, setConnection] = useState(null);
@@ -13,10 +15,35 @@ const Chat = () => {
 
   const lastMessageRef = useRef(null);
 
+
+  const loadDictionaries = () => {
+    // Load the default dictionary (English)
+    const englishWords = leoProfanity.getDictionary();
+  console.log("englishWords",englishWords);
+    // Load the Hindi dictionary
+    leoProfanity.loadDictionary('hi');
+    const hindiWords = leoProfanity.getDictionary();
+    console.log("hindiWords",hindiWords);
+  
+    // Combine English and Hindi words
+    const combinedProfanities = [...englishWords, ...hindiWords];
+  
+    // Add the combined list to the filter
+    leoProfanity.add(combinedProfanities);
+  };
+
+    // Load the dictionaries on component mount
+    useState(() => {
+      loadDictionaries();
+    }, []);
+
   useEffect(() => {
     const connect = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:7064/chathub", {
-        transport: signalR.HttpTransportType.WebSockets  // Explicitly specify WebSockets
+      // .withUrl("https://poc-chat-api.azurewebsites.net/chathub", {
+        .withUrl("https://localhost:7064/chathub", {
+        transport: signalR.HttpTransportType.WebSockets |
+                   signalR.HttpTransportType.ServerSentEvents |
+                   signalR.HttpTransportType.LongPolling
       })
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
@@ -93,7 +120,7 @@ const Chat = () => {
   useEffect(() => {
     if (isConnected && connection && messages.length > 0) {
       const lastMessage = messages[messages.length - 1];
-      console.log("lastMessage", lastMessage);
+      // console.log("lastMessage", lastMessage);
       if (user !== lastMessage.user && lastMessage.status !== 'read') {
         connection.invoke("UserReadMessage", lastMessage.user, lastMessage.messageId);
         updateMessageStatus(lastMessage.messageId, 'read');
@@ -115,8 +142,8 @@ const Chat = () => {
   // }, [connection]);
 
   const updateMessageStatus = (messageId, status) => {
-    console.log("updateMessageStatus: messageId", messageId);
-    console.log("updateMessageStatus: status", status);
+    // console.log("updateMessageStatus: messageId", messageId);
+    // console.log("updateMessageStatus: status", status);
     setMessages(prevMessages => prevMessages.map(msg =>
       msg.messageId === messageId ? { ...msg, status } : msg
     ));
@@ -151,9 +178,17 @@ const Chat = () => {
   const sendMessage = async () => {
     if (isConnected && connection) {
       try {
-        await connection.invoke("SendMessage", user, message);
+        // const filter = new Filter(); // Create a new instance of the profanity filter
+        // console.log(filter.list);
+        // const cleanMessage = filter.clean(message); // Clean the message
+
+        const cleanMessage = leoProfanity.clean(message);
+        console.log("Original message: ", message);
+        console.log("Filtered message: ", cleanMessage);
+
+        await connection.invoke("SendMessage", user, cleanMessage);
         setMessage('');
-        setFirstMessageSent(true); // Set the flag to true when the first message is sent
+        setFirstMessageSent(true);
       } catch (error) {
         console.error("Error sending message: ", error);
       }

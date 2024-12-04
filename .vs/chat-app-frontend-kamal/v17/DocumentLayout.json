@@ -1,0 +1,163 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\VideoGrid.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\VideoGrid.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\VideoPlayer.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\VideoPlayer.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\VideoStream.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\VideoStream.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\public\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:public\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\ThumbnailGenerator.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ThumbnailGenerator.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "index.css",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\index.css",
+              "RelativeDocumentMoniker": "src\\index.css",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\index.css",
+              "RelativeToolTip": "src\\index.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-07T09:35:02.246Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\public\\index.html",
+              "RelativeDocumentMoniker": "public\\index.html",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\public\\index.html",
+              "RelativeToolTip": "public\\index.html",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-11-07T09:34:40.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "App.css",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\App.css",
+              "RelativeDocumentMoniker": "src\\App.css",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\App.css",
+              "RelativeToolTip": "src\\App.css",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAewLAAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-07T09:31:19.561Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "App.js",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\App.js",
+              "RelativeDocumentMoniker": "src\\App.js",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\App.js",
+              "RelativeToolTip": "src\\App.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-11-05T09:14:44.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ThumbnailGenerator.jsx",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\ThumbnailGenerator.jsx",
+              "RelativeDocumentMoniker": "src\\components\\ThumbnailGenerator.jsx",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\ThumbnailGenerator.jsx",
+              "RelativeToolTip": "src\\components\\ThumbnailGenerator.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-11-05T10:51:08.335Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "VideoStream.jsx",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\VideoStream.jsx",
+              "RelativeDocumentMoniker": "src\\components\\VideoStream.jsx",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\VideoStream.jsx",
+              "RelativeToolTip": "src\\components\\VideoStream.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-11-05T09:15:45.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VideoPlayer.jsx",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\VideoPlayer.jsx",
+              "RelativeDocumentMoniker": "src\\components\\VideoPlayer.jsx",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\VideoPlayer.jsx",
+              "RelativeToolTip": "src\\components\\VideoPlayer.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-11-05T09:15:34.77Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "VideoGrid.jsx",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\VideoGrid.jsx",
+              "RelativeDocumentMoniker": "src\\components\\VideoGrid.jsx",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\ReactChatApp\\ReactChatApp\\chat-app-frontend-kamal\\src\\components\\VideoGrid.jsx",
+              "RelativeToolTip": "src\\components\\VideoGrid.jsx",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-11-05T09:15:13.181Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

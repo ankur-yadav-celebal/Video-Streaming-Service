@@ -1,0 +1,78 @@
+/* VideoGrid.css */
+
+/* Main container for the video grid */
+.video-grid-container {
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  /* Grid layout for video thumbnails */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Individual video card */
+  .video-card {
+    cursor: pointer;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  
+  .video-card:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Video thumbnail image */
+  .video-thumbnail {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Information below each video */
+  .video-info {
+    padding: 10px;
+  }
+  
+  .video-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .video-duration {
+    color: #777;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  /* Video player when a video is selected */
+  .video-player-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .video-player {
+    width: 80%;
+    max-width: 800px;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button:hover {
+    background-color: #d32f2f;
+  }
+  

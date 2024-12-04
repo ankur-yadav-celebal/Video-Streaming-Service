@@ -1,5 +1,5 @@
 .App {
-  /* text-align: center; */
+   text-align: center; 
 }
 
 .App-logo {
@@ -165,4 +165,80 @@ li
 
 .message-status span {
   margin-left: 5px;
+}
+
+/* style.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /*background-color: black;*/
+    margin: 0;
+}
+
+.netflix-logo {
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 100px;
+    color: red;
+}
+
+.netflix-text {
+    position: relative;
+    z-index: 2;
+}
+
+.netflix-shadow {
+    position: absolute;
+    left: 8px;
+    color: #b9090b;
+    z-index: 1;
+    text-shadow: 4px 0 #e50914;
+}
+
+
+/* video {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.video-js .vjs-play-control .vjs-icon-placeholder:before {
+  content: "\f144"; 
+  font-family: 'FontAwesome';
+}
+
+.video-js .vjs-volume-menu-button .vjs-icon-placeholder:before {
+  content: "\f028"; 
+  font-family: 'FontAwesome';
+}
+
+.video-js .vjs-mute-control .vjs-icon-placeholder:before {
+  content: "\f026"; 
+  font-family: 'FontAwesome';
+} */
+
+
+/* style.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /*background-color: black;*/
+    margin: 0;
+}
+
+.netflix-title {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 80px; /* Adjust for size as needed */
+    color: #e50914; /* Netflix red */
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow: -1px 0px 0px #b9090b, 1px 0px 0px #b9090b, 0px -1px 0px #b9090b, 0px 1px 0px #b9090b;
 }

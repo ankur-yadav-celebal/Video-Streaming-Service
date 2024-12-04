@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import * as signalR from '@microsoft/signalr';
-import { Filter } from 'bad-words';
+import { Modal, Typography, Button, Box } from '@mui/material'; // Import Button for better styling
 import * as leoProfanity from 'leo-profanity';
 
 const Chat = () => {
@@ -8,42 +8,61 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [user, setUser] = useState(localStorage.getItem('user') || ''); // Get username from local storage
-  const [isConnected, setIsConnected] = useState(false);  // New state to track connection status
-  const [firstMessageSent, setFirstMessageSent] = useState(false); // New state variable
+  const [isConnected, setIsConnected] = useState(false);
+  const [firstMessageSent, setFirstMessageSent] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState('');
+  const [isProfanityModalOpen, setIsProfanityModalOpen] = useState(false);
 
   const lastMessageRef = useRef(null);
 
+  useEffect(() => {
+    // Initialize English profanity filter
+    leoProfanity.loadDictionary();
+  }, []);
+
 
   const loadDictionaries = () => {
-    // Load the default dictionary (English)
     const englishWords = leoProfanity.getDictionary();
-  console.log("englishWords",englishWords);
-    // Load the Hindi dictionary
+    console.log("englishWords", englishWords);
     leoProfanity.loadDictionary('hi');
     const hindiWords = leoProfanity.getDictionary();
-    console.log("hindiWords",hindiWords);
-  
-    // Combine English and Hindi words
+    console.log("hindiWords", hindiWords);
     const combinedProfanities = [...englishWords, ...hindiWords];
-  
-    // Add the combined list to the filter
     leoProfanity.add(combinedProfanities);
   };
 
-    // Load the dictionaries on component mount
-    useState(() => {
-      loadDictionaries();
-    }, []);
+  // Load the dictionaries on component mount
+  useState(() => {
+    loadDictionaries();
+  }, []);
+
+  const hindiProfanityList = ['chutiye', 'bhosdike', 'madarchod', 'gandu', 'bhenchod'];
+
+  const containsHindiProfanity = (text) => {
+    return hindiProfanityList.some((badWord) =>
+      text.toLowerCase().includes(badWord)
+    );
+  };
+
+  const handleProfanityCheck = (text) => {
+    // Check for English and Hindi offensive words
+    const isEnglishProfane = leoProfanity.check(text);
+    const isHindiProfane = containsHindiProfanity(text);
+
+    if (isEnglishProfane || isHindiProfane) {
+      setIsProfanityModalOpen(true); // Show modal
+      return true;
+    }
+    return false;
+  };
 
   useEffect(() => {
     const connect = new signalR.HubConnectionBuilder()
-      // .withUrl("https://poc-chat-api.azurewebsites.net/chathub", {
-        .withUrl("https://localhost:7064/chathub", {
+      .withUrl("https://localhost:7064/chathub", {
         transport: signalR.HttpTransportType.WebSockets |
-                   signalR.HttpTransportType.ServerSentEvents |
-                   signalR.HttpTransportType.LongPolling
+          signalR.HttpTransportType.ServerSentEvents |
+          signalR.HttpTransportType.LongPolling
       })
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
@@ -70,14 +89,13 @@ const Chat = () => {
         }
 
         connect.on("ReceiveMessage", (user, message, timestamp, messageId, status) => {
-          setMessages(prevMessages => 
-            [...prevMessages,  { user, message, timestamp, messageId, status }]);
+          setMessages(prevMessages =>
+            [...prevMessages, { user, message, timestamp, messageId, status }]);
         });
 
         connect.on("MessageRead", (messageId) => {
           updateMessageStatus(messageId, 'read');
         });
-
       })
       .catch(error => console.error("Connection failed: ", error));
 
@@ -120,7 +138,6 @@ const Chat = () => {
   useEffect(() => {
     if (isConnected && connection && messages.length > 0) {
       const lastMessage = messages[messages.length - 1];
-      // console.log("lastMessage", lastMessage);
       if (user !== lastMessage.user && lastMessage.status !== 'read') {
         connection.invoke("UserReadMessage", lastMessage.user, lastMessage.messageId);
         updateMessageStatus(lastMessage.messageId, 'read');
@@ -128,22 +145,7 @@ const Chat = () => {
     }
   }, [messages, connection, isConnected, user]);
 
-  // useEffect(() => {
-  //   if (connection) {
-  //     connection.on("MessageRead", (messageId) => {
-  //       console.log("MessageRead event received with messageId: ", messageId);
-  //       if (messageId) {
-  //         updateMessageStatus(messageId, 'read');
-  //       } else {
-  //         console.error("MessageId is null or undefined");
-  //       }
-  //     });
-  //   }
-  // }, [connection]);
-
   const updateMessageStatus = (messageId, status) => {
-    // console.log("updateMessageStatus: messageId", messageId);
-    // console.log("updateMessageStatus: status", status);
     setMessages(prevMessages => prevMessages.map(msg =>
       msg.messageId === messageId ? { ...msg, status } : msg
     ));
@@ -171,23 +173,19 @@ const Chat = () => {
 
       typingTimeout = setTimeout(() => {
         connection.invoke("UserStoppedTyping", user);
-      }, 3000);  // Stop typing after 3 seconds of inactivity
+      }, 3000);
     }
   };
 
   const sendMessage = async () => {
     if (isConnected && connection) {
+      if (handleProfanityCheck(message)) {
+        return; // Do not send the message if it contains offensive words
+      }
       try {
-        // const filter = new Filter(); // Create a new instance of the profanity filter
-        // console.log(filter.list);
-        // const cleanMessage = filter.clean(message); // Clean the message
-
-        const cleanMessage = leoProfanity.clean(message);
-        console.log("Original message: ", message);
-        console.log("Filtered message: ", cleanMessage);
-
+        const cleanMessage = leoProfanity.clean(message); // Clean message (English)
         await connection.invoke("SendMessage", user, cleanMessage);
-        setMessage('');
+        setMessage(''); // Clear the input field after sending
         setFirstMessageSent(true);
       } catch (error) {
         console.error("Error sending message: ", error);
@@ -196,6 +194,31 @@ const Chat = () => {
       console.warn("Connection is not ready. Please wait.");
     }
   };
+
+
+  const handleCloseModal = () => {
+    setIsProfanityModalOpen(false);
+  };
+
+  useEffect(() => {
+    // Event listener for keydown
+    const handleKeyDown = (event) => {
+      console.log("handleKeyDown",handleKeyDown);
+      if (event.key === 'Enter') {
+        handleCloseModal(); // Close the modal when Enter is pressed
+      }
+    };
+
+    // Attach the event listener when the modal is open
+    if (isProfanityModalOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
+    // Clean up the event listener on unmount or when modal closes
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isProfanityModalOpen]); // Depend on the modal's open state
 
   return (
     <div className="chat-container">
@@ -210,7 +233,6 @@ const Chat = () => {
               <div className="message-user">{msg.user !== user ? msg.user : null} <span>{msg.timestamp}</span></div>
               <div className="message-text">{msg.message}</div>
               <div className="message-status">
-                {/* Display the blue ticks only for the current user's sent messages that are read */}
                 {msg.user === user && msg.status === 'sent' && <span>✓</span>}
                 {msg.user === user && msg.status === 'read' && <span style={{ color: 'blue' }}>✓✓</span>}
               </div>
@@ -237,7 +259,6 @@ const Chat = () => {
           onKeyDown={handleKeyPress} // Add keypress event to trigger sending message on Enter
           disabled={!isConnected || user === ''}  // Disable if not connected or no username
         />
-
         <button
           className="send-button"
           onClick={sendMessage}
@@ -246,6 +267,41 @@ const Chat = () => {
           Send
         </button>
       </div>
+
+      {/* Modal to show profanity alert */}
+      <Modal
+        open={isProfanityModalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="profanity-modal-title"
+        aria-describedby="profanity-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+            outline: 'none',
+          }}
+        >
+          <Typography id="profanity-modal-title" variant="h6" component="h2" gutterBottom>
+            🚫 Offensive Language Detected
+          </Typography>
+          <Typography id="profanity-modal-description" variant="body1" gutterBottom>
+            You cannot use offensive words in the chat. Your message will not be sent.
+          </Typography>
+          <Box textAlign="right">
+            <Button variant="contained" color="primary" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </div>
   );
 };
